@@ -29,18 +29,45 @@ function render(variables = {}) {
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
 
+  // Determine the social media position class
+  let socialMediaPositionClass =
+    variables.socialMediaPosition === "left"
+      ? "position-left"
+      : "position-right";
+
+  // Build the HTML for social media links
+  let socialMediaHTML = "";
+  if (variables.twitter) {
+    socialMediaHTML += `<li><a href="https://twitter.com/${variables.twitter}"><i class="fab fa-twitter"></i></a></li>`;
+  }
+  if (variables.github) {
+    socialMediaHTML += `<li><a href="https://github.com/${variables.github}"><i class="fab fa-github"></i></a></li>`;
+  }
+  if (variables.linkedin) {
+    socialMediaHTML += `<li><a href="https://linkedin.com/in/${variables.linkedin}"><i class="fab fa-linkedin"></i></a></li>`;
+  }
+  if (variables.instagram) {
+    socialMediaHTML += `<li><a href="https://instagram.com/${variables.instagram}"><i class="fab fa-instagram"></i></a></li>`;
+  }
+
+  // Build the HTML for name, role, and location
+  let name = `${variables.name ? variables.name : "First Name"} ${
+    variables.lastName ? variables.lastName : "Last Name"
+  }`;
+  let role = variables.role ? variables.role : "Role";
+  let location = `${variables.city ? variables.city : "City"}, ${
+    variables.country ? variables.country : "Country"
+  }`;
+
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/school/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
+          <h1>${name}</h1>
+          <h2>${role}</h2>
+          <h3>${location}</h3>
+          <ul class="${socialMediaPositionClass}">
+            ${socialMediaHTML}
           </ul>
         </div>
     `;
@@ -58,7 +85,7 @@ window.onload = function() {
     // this is the url for the profile avatar
     avatarURL: "https://randomuser.me/api/portraits/women/42.jpg",
     // social media bar position (left or right)
-    socialMediaPosition: "position-left",
+    socialMediaPosition: "right",
     // social media usernames
     twitter: null,
     github: null,
