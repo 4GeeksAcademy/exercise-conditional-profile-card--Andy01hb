@@ -1,3 +1,4 @@
+import { right } from "@popperjs/core";
 import "../style/index.css";
 
 /**
@@ -29,48 +30,40 @@ function render(variables = {}) {
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
 
-  // Determine the social media position class
-  let socialMediaPositionClass =
-    variables.socialMediaPosition === "left"
-      ? "position-left"
-      : "position-right";
-
-  // Build the HTML for social media links
-  let socialMediaHTML = "";
-  if (variables.twitter) {
-    socialMediaHTML += `<li><a href="https://twitter.com/${variables.twitter}"><i class="fab fa-twitter"></i></a></li>`;
-  }
-  if (variables.github) {
-    socialMediaHTML += `<li><a href="https://github.com/${variables.github}"><i class="fab fa-github"></i></a></li>`;
-  }
-  if (variables.linkedin) {
-    socialMediaHTML += `<li><a href="https://linkedin.com/in/${variables.linkedin}"><i class="fab fa-linkedin"></i></a></li>`;
-  }
-  if (variables.instagram) {
-    socialMediaHTML += `<li><a href="https://instagram.com/${variables.instagram}"><i class="fab fa-instagram"></i></a></li>`;
-  }
-
-  // Build the HTML for name, role, and location
-  let name = `${variables.name ? variables.name : "First Name"} ${
-    variables.lastName ? variables.lastName : "Last Name"
-  }`;
-  let role = variables.role ? variables.role : "Role";
-  let location = `${variables.city ? variables.city : "City"}, ${
-    variables.country ? variables.country : "Country"
-  }`;
-
   // reset the website body with the new html output
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
           <img src="${variables.avatarURL}" class="photo" />
-          <h1>${name}</h1>
-          <h2>${role}</h2>
-          <h3>${location}</h3>
-          <ul class="${socialMediaPositionClass}">
-            ${socialMediaHTML}
+          <h1>${variables.name ? variables.name : "Name"} ${
+    variables.lastName ? variables.lastName : "LastName"
+  }</h1>
+          <h2>${variables.role ? variables.role : "Role"}</h2>
+          <h3>${variables.city ? variables.city : "City"}, ${
+    variables.country ? variables.country : "Country"
+  }</h3>
+          <ul class="${variables.socialMediaPosition}">
+            <li><a href="${
+              variables.twitter
+                ? variables.twitter
+                : "https://x.com/4geeksacademyES"
+            }" target="_blank"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="${
+              variables.github
+                ? variables.github
+                : "https://github.com/4GeeksAcademy"
+            }" target="_blank"><i class="fab fa-github"></i></a></li>
+            <li><a href="${
+              variables.linkedin
+                ? variables.linkedin
+                : "https://www.linkedin.com/school/4geeks-academy-latino/"
+            }" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="${
+              variables.instagram
+                ? variables.instagram
+                : "https://www.instagram.com/4geeksacademylatam/"
+            }" target="_blank"><i class="fab fa-instagram"></i></a></li>
           </ul>
-        </div>
-    `;
+  </div>`;
 }
 
 /**
@@ -85,7 +78,7 @@ window.onload = function() {
     // this is the url for the profile avatar
     avatarURL: "https://randomuser.me/api/portraits/women/42.jpg",
     // social media bar position (left or right)
-    socialMediaPosition: "right",
+    socialMediaPosition: "position-left",
     // social media usernames
     twitter: null,
     github: null,
